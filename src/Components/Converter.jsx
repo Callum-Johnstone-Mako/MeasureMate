@@ -115,6 +115,7 @@ class Converter extends Component {
   render() {
     return (
       <div>
+        <h1>MeasureMate</h1>
         <label>
           Category:
           <select

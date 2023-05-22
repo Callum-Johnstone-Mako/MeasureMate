@@ -1,12 +1,18 @@
 import React from 'react'
-import Converter from './Components/Converter'
 import './App.css'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import Converter from './Components/Converter'
+import HomePage from './HomePage'
 
 function App() {
   return (
     <div className="App">
-      <h1>MeasureMate</h1>
-      <Converter />
+      <Router>
+        <Routes>
+          <Route path="/Converter" element={<Converter />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </Router>
     </div>
   )
 }
