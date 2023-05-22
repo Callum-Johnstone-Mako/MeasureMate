@@ -28,7 +28,13 @@ const categories = {
       mile: 1609.34,
     },
   },
-  // add more categories as needed...
+  temperature: {
+    baseUnit: 'celsius',
+    units: {
+      celsius: 1,
+      fahrenheit: 1,
+    },
+  },
 }
 
 class Converter extends Component {
@@ -71,10 +77,33 @@ class Converter extends Component {
   }
 
   convert = (value, fromUnit, toUnit) => {
-    const fromFactor = categories[this.state.category].units[fromUnit]
-    const toFactor = categories[this.state.category].units[toUnit]
-    const baseValue = value * fromFactor
-    const result = baseValue / toFactor
+    let result
+    value = Number(value)
+
+    if (this.state.category === 'temperature') {
+      if (fromUnit === 'celsius' && toUnit === 'fahrenheit') {
+        result = (value * 9) / 5 + 32
+      } else if (fromUnit === 'fahrenheit' && toUnit === 'celsius') {
+        result = ((value - 32) * 5) / 9
+      } else {
+        result = value
+      }
+    } else {
+      const fromFactor = categories[this.state.category].units[fromUnit]
+      const toFactor = categories[this.state.category].units[toUnit]
+      const baseValue = value * fromFactor
+      result = baseValue / toFactor
+    }
+
+    if (!isNaN(result)) {
+      this.setState({
+        amount: value,
+        inputUnit: fromUnit,
+        outputUnit: toUnit,
+        result: result.toFixed(2),
+      })
+    }
+
     this.setState({
       amount: value,
       inputUnit: fromUnit,
